@@ -1,9 +1,9 @@
 package com.example.pro0313.controller;
 
-import com.example.pro0313.entity.Memo;
 import com.example.pro0313.service.MemoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.pro0313.dto.MemoDto;
 
 import java.util.List;
 
@@ -18,18 +18,18 @@ public class MemoController {
     }
 
     @PostMapping
-    public Memo createMemo(@RequestBody Memo memo) {
-        return memoService.createMemo(memo);
+    public MemoDto createMemo(@RequestBody MemoDto dto) {
+        return memoService.createMemo(dto);
     }
 
     @GetMapping
-    public List<Memo> getMemos() {
+    public List<MemoDto> getMemos() {
         return memoService.getMemos();
     }
 
     @PutMapping("/{id}")
-    public Memo updateMemo(@PathVariable Long id, @RequestBody Memo memo) {
-        return memoService.updateMemo(id, memo.getContent());
+    public MemoDto updateMemo(@PathVariable Long id, @RequestBody MemoDto dto) {
+        return memoService.updateMemo(id, dto);
     }
 
     // Delete

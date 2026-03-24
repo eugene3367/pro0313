@@ -3,6 +3,7 @@ package com.example.pro0313.service;
 import com.example.pro0313.entity.Memo;
 import com.example.pro0313.repository.MemoRepository;
 import org.springframework.stereotype.Service;
+import com.example.pro0313.dto.MemoDto;
 
 import java.util.List;
 
@@ -14,19 +15,31 @@ public class MemoService {
         this.memoRepository = memoRepository;
     }
 
-    public Memo createMemo(Memo memo) {
-        return memoRepository.save(memo);
+    public MemoDto createMemo(MemoDto dto) {
+        Memo memo = new Memo();
+        memo.setContent(dto.getContent());
+
+        Memo saved = memoRepository.save(memo);
+
+        return toDto(saved);
     }
 
-    public List<Memo> getMemos() {
-        return memoRepository.findAll();
+    public List<MemoDto> getMemos() {
+        return memoRepository.findAll()
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
-    public Memo updateMemo(Long id, String content) {
+    public MemoDto updateMemo(Long id, MemoDto dto) {
         Memo memo = memoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Memo not found: " + id));
-        memo.setContent(content);
-        return memoRepository.save(memo);
+                .orElseThrow(() -> new RuntimeException("Memo not found"));
+
+        memo.setContent(dto.getContent());
+
+        Memo updated = memoRepository.save(memo);
+
+        return toDto(updated);
     }
 
     // Delete
@@ -35,5 +48,12 @@ public class MemoService {
             throw new RuntimeException("Memo not found: " + id);
         }
         memoRepository.deleteById(id);
+    }
+
+    private MemoDto toDto(Memo memo) {
+        MemoDto dto = new MemoDto();
+        dto.setId(memo.getId());
+        dto.setContent(memo.getContent());
+        return dto;
     }
 }
