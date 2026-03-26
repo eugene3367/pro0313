@@ -4,6 +4,8 @@ import com.example.pro0313.service.MemoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.pro0313.dto.MemoDto;
+import com.example.pro0313.response.ApiResponse;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -18,8 +20,13 @@ public class MemoController {
     }
 
     @PostMapping
-    public MemoDto createMemo(@RequestBody MemoDto dto) {
-        return memoService.createMemo(dto);
+    public ResponseEntity<ApiResponse<MemoDto>> createMemo(@Valid @RequestBody MemoDto dto) {
+
+        MemoDto result = memoService.createMemo(dto);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, result, null)
+        );
     }
 
     @GetMapping
@@ -35,11 +42,7 @@ public class MemoController {
     // Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void>  deleteMemo(@PathVariable Long id) {
-        try {
-            memoService.deleteMemo(id);
-            return ResponseEntity.noContent().build(); // 204 No Content
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build(); // 404 Not Found
-        }
+        memoService.deleteMemo(id);
+        return ResponseEntity.noContent().build();
     }
 }

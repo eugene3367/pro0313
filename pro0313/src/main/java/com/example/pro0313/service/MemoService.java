@@ -1,6 +1,7 @@
 package com.example.pro0313.service;
 
 import com.example.pro0313.entity.Memo;
+import com.example.pro0313.exception.MemoNotFoundException;
 import com.example.pro0313.repository.MemoRepository;
 import org.springframework.stereotype.Service;
 import com.example.pro0313.dto.MemoDto;
@@ -33,7 +34,7 @@ public class MemoService {
 
     public MemoDto updateMemo(Long id, MemoDto dto) {
         Memo memo = memoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Memo not found"));
+                .orElseThrow(() -> new MemoNotFoundException(id));
 
         memo.setContent(dto.getContent());
 
@@ -45,7 +46,7 @@ public class MemoService {
     // Delete
     public void deleteMemo(Long id) {
         if (!memoRepository.existsById(id)) {
-            throw new RuntimeException("Memo not found: " + id);
+            throw new MemoNotFoundException(id);
         }
         memoRepository.deleteById(id);
     }
