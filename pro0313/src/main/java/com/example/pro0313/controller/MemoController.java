@@ -30,19 +30,36 @@ public class MemoController {
     }
 
     @GetMapping
-    public List<MemoDto> getMemos() {
-        return memoService.getMemos();
+    public ResponseEntity<ApiResponse<List<MemoDto>>> getMemos() {
+
+        List<MemoDto> result = memoService.getMemos();
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, result, null)
+        );
     }
 
     @PutMapping("/{id}")
-    public MemoDto updateMemo(@PathVariable Long id, @RequestBody MemoDto dto) {
-        return memoService.updateMemo(id, dto);
+    public ResponseEntity<ApiResponse<MemoDto>> updateMemo(
+            @PathVariable Long id,
+            @Valid @RequestBody MemoDto dto
+    ) {
+
+        MemoDto result = memoService.updateMemo(id, dto);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, result, null)
+        );
     }
 
     // Delete
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void>  deleteMemo(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteMemo(@PathVariable Long id) {
+
         memoService.deleteMemo(id);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, null, null)
+        );
     }
 }
