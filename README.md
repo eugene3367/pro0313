@@ -1,27 +1,26 @@
 # Memo API Project
 
-간단한 메모 CRUD API 프로젝트입니다.  
-Spring Boot 기반으로 REST API를 구현하고,  
-DTO, Validation, Exception Handling, API 응답 구조를 적용했습니다.
+A simple CRUD API for managing memos.
+This project is built using Spring Boot and demonstrates core backend concepts such as DTO, validation, exception handling, and standardized API responses.
 
 ---
 
 ## Tech Stack
 
-- Java
-- Spring Boot
-- Spring Data JPA
-- H2 Database (or MySQL)
-- Gradle
+* Java
+* Spring Boot
+* Spring Data JPA
+* H2 Database (or MySQL)
+* Gradle
 
 ---
 
 ## Features
 
-- 메모 생성 (Create)
-- 메모 조회 (Read)
-- 메모 수정 (Update)
-- 메모 삭제 (Delete)
+* Create memo
+* Read memo list
+* Update memo
+* Delete memo
 
 ---
 
@@ -29,7 +28,7 @@ DTO, Validation, Exception Handling, API 응답 구조를 적용했습니다.
 
 ### Unified Response Format
 
-모든 API 응답을 아래 구조로 통일했습니다.
+All API responses follow a consistent structure:
 
 ```json
 {
@@ -37,3 +36,53 @@ DTO, Validation, Exception Handling, API 응답 구조를 적용했습니다.
   "data": {},
   "error": null
 }
+```
+
+---
+
+## Key Concepts
+
+### DTO
+
+* Prevents exposing internal entity directly
+* Separates request and response models from database structure
+
+### Validation
+
+* Uses `@Valid` and validation annotations
+* Returns `400 Bad Request` for invalid input
+
+### Exception Handling
+
+* Centralized handling using `@RestControllerAdvice`
+* Provides consistent error responses
+
+### API Response Standardization
+
+* All responses are wrapped in a unified format for consistency
+
+---
+
+## API Endpoints
+
+| Method | Endpoint   | Description   |
+| ------ | ---------- | ------------- |
+| POST   | /memo      | Create memo   |
+| GET    | /memo      | Get memo list |
+| PUT    | /memo/{id} | Update memo   |
+| DELETE | /memo/{id} | Delete memo   |
+
+---
+
+## What I Learned
+
+* Understanding of request → service → repository flow
+* Importance of validation in API design
+* How exception handling improves API stability
+* Structuring clean and maintainable backend code
+
+---
+
+## Repository
+
+https://github.com/eugene3367/pro0313
