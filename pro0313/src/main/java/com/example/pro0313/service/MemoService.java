@@ -1,8 +1,11 @@
 package com.example.pro0313.service;
 
+import com.example.pro0313.dto.MemoResponseDto;
 import com.example.pro0313.entity.Memo;
 import com.example.pro0313.exception.MemoNotFoundException;
 import com.example.pro0313.repository.MemoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.pro0313.dto.MemoDto;
 
@@ -56,5 +59,24 @@ public class MemoService {
         dto.setId(memo.getId());
         dto.setContent(memo.getContent());
         return dto;
+    }
+
+    public List<MemoResponseDto> search(String keyword) {
+        return memoRepository.findByContentContaining(keyword)
+                .stream()
+                .map(MemoResponseDto::new)
+                .toList();
+    }
+
+    public List<MemoResponseDto> findAll() {
+        return memoRepository.findAll()
+                .stream()
+                .map(MemoResponseDto::new)
+                .toList();
+    }
+
+    public Page<MemoResponseDto> findAll(Pageable pageable) {
+        return memoRepository.findAll(pageable)
+                .map(MemoResponseDto::new);
     }
 }

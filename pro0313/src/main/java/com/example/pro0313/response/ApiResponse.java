@@ -17,4 +17,13 @@ public class ApiResponse<T> {
     public boolean isSuccess() { return success; }
     public T getData() { return data; }
     public ErrorResponse getError() { return error; }
+
+    public ApiResponse() {
+    }
+    public static <T> ApiResponse<T> success(T data) {
+        ApiResponse<T> response = new ApiResponse<>();
+        response.success = true;
+        response.data = data;
+        return response;
+    }
 }
