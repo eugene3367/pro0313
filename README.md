@@ -1,34 +1,42 @@
 # Memo API Project
 
-A simple CRUD API for managing memos.
-This project is built using Spring Boot and demonstrates core backend concepts such as DTO, validation, exception handling, and standardized API responses.
+A simple Memo CRUD API built with Spring Boot.  
+This project demonstrates RESTful API design, validation, exception handling, and database integration.
+
+---
+
+## Live Demo
+
+https://pro0313.onrender.com
 
 ---
 
 ## Tech Stack
 
-* Java
-* Spring Boot
-* Spring Data JPA
-* H2 Database (or MySQL)
-* Gradle
+- Java
+- Spring Boot
+- Spring Data JPA
+- PostgreSQL (Render)
+- Gradle
+- Docker
 
 ---
 
 ## Features
 
-* Create memo
-* Read memo list
-* Update memo
-* Delete memo
+- Create Memo
+- Read Memo (with Pagination and Sorting)
+- Update Memo
+- Delete Memo
+- Search Memo by keyword
+- Global Exception Handling
+- Unified API Response Structure
 
 ---
 
-## API Structure
+## API Response Format
 
-### Unified Response Format
-
-All API responses follow a consistent structure:
+All API responses follow this structure:
 
 ```json
 {
@@ -37,52 +45,43 @@ All API responses follow a consistent structure:
   "error": null
 }
 ```
+---
+
+## API Examples
+## Get Memos (Pagination)
+
+GET /memo?page=0&size=5&sort=id,desc
 
 ---
 
-## Key Concepts
+## Search Memos
 
-### DTO
+## GET /memo?keyword=hello
 
-* Prevents exposing internal entity directly
-* Separates request and response models from database structure
-
-### Validation
-
-* Uses `@Valid` and validation annotations
-* Returns `400 Bad Request` for invalid input
-
-### Exception Handling
-
-* Centralized handling using `@RestControllerAdvice`
-* Provides consistent error responses
-
-### API Response Standardization
-
-* All responses are wrapped in a unified format for consistency
+Create Memo
 
 ---
 
-## API Endpoints
+## POST /memo
 
-| Method | Endpoint   | Description   |
-| ------ | ---------- | ------------- |
-| POST   | /memo      | Create memo   |
-| GET    | /memo      | Get memo list |
-| PUT    | /memo/{id} | Update memo   |
-| DELETE | /memo/{id} | Delete memo   |
+```json
+{
+  "content": "hello world"
+}
+```
 
 ---
 
 ## What I Learned
 
-* Understanding of request → service → repository flow
-* Importance of validation in API design
-* How exception handling improves API stability
-* Structuring clean and maintainable backend code
+- Designing RESTful APIs
+- Applying DTO pattern and separation of concerns
+- Implementing validation and global exception handling
+- Using pagination and sorting with Spring Data JPA
+- Deploying a Spring Boot application using Docker
+- Connecting a PostgreSQL database on Render
 
----
-
-## Repository
-
-https://github.com/eugene3367/pro0313
+## Future Improvements
+- Add user authentication using JWT
+- Implement user-based memo management
+- Improve API response structure
