@@ -1,88 +1,63 @@
 # Memo API Project
 
-A simple CRUD API for managing memos.
-This project is built using Spring Boot and demonstrates core backend concepts such as DTO, validation, exception handling, and standardized API responses.
-
----
+## Overview
+This project is a Spring Boot based backend application that provides memo management functionality with user authentication.
 
 ## Tech Stack
-
-* Java
-* Spring Boot
-* Spring Data JPA
-* H2 Database (or MySQL)
-* Gradle
-
----
+- Java
+- Spring Boot
+- Spring Data JPA
+- PostgreSQL (Render)
+- JWT (JSON Web Token)
 
 ## Features
 
-* Create memo
-* Read memo list
-* Update memo
-* Delete memo
+### User Authentication
+- User signup
+- User login
+- JWT token generation
 
----
-
-## API Structure
-
-### Unified Response Format
-
-All API responses follow a consistent structure:
-
-```json
-{
-  "success": true,
-  "data": {},
-  "error": null
-}
-```
-
----
-
-## Key Concepts
-
-### DTO
-
-* Prevents exposing internal entity directly
-* Separates request and response models from database structure
-
-### Validation
-
-* Uses `@Valid` and validation annotations
-* Returns `400 Bad Request` for invalid input
-
-### Exception Handling
-
-* Centralized handling using `@RestControllerAdvice`
-* Provides consistent error responses
-
-### API Response Standardization
-
-* All responses are wrapped in a unified format for consistency
-
----
+### Memo API
+- Create memo
+- Read memo list
+- Pagination support
+- Search functionality
+- Sorting support
 
 ## API Endpoints
 
-| Method | Endpoint   | Description   |
-| ------ | ---------- | ------------- |
-| POST   | /memo      | Create memo   |
-| GET    | /memo      | Get memo list |
-| PUT    | /memo/{id} | Update memo   |
-| DELETE | /memo/{id} | Delete memo   |
+### Auth
+- POST /auth/signup
+- POST /auth/login
 
----
+### Memo
+- GET /memo
+- POST /memo
 
-## What I Learned
+## Authentication Flow
+1. User logs in with username and password
+2. Server validates credentials
+3. JWT token is generated and returned
+4. Client stores token for future requests
 
-* Understanding of request → service → repository flow
-* Importance of validation in API design
-* How exception handling improves API stability
-* Structuring clean and maintainable backend code
+## Project Structure
+- controller: API endpoints
+- service: business logic
+- repository: database access
+- entity: database models
+- dto: request/response objects
+- jwt: token generation logic
 
----
+## Database
+- PostgreSQL hosted on Render
 
-## Repository
+## Deployment
+- Backend deployed on Render
+- Database connected via environment variables
 
-https://github.com/eugene3367/pro0313
+## Future Improvements
+- JWT authentication filter
+- Password encryption (BCrypt)
+- Exception handling improvement
+- API validation
+- Refresh token implementation

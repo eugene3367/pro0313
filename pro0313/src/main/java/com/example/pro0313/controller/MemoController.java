@@ -1,15 +1,12 @@
 package com.example.pro0313.controller;
 
-import com.example.pro0313.dto.MemoResponseDto;
+import com.example.pro0313.dto.MemoDto;
+import com.example.pro0313.response.ApiResponse;
 import com.example.pro0313.service.MemoService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.pro0313.dto.MemoDto;
-import com.example.pro0313.response.ApiResponse;
-import jakarta.validation.Valid;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/memo")
@@ -31,15 +28,6 @@ public class MemoController {
         );
     }
 
-//    @GetMapping
-//    public ResponseEntity<ApiResponse<List<MemoDto>>> getMemos() {
-//
-//        List<MemoDto> result = memoService.getMemos();
-//
-//        return ResponseEntity.ok(
-//                new ApiResponse<>(true, result, null)
-//        );
-//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<MemoDto>> updateMemo(
