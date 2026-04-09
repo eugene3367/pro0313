@@ -1,7 +1,10 @@
-# Memo API Project
+# Memo API (Spring Boot)
 
-## Overview
-This project is a Spring Boot based backend application that provides memo management functionality with user authentication.
+## Project Overview
+This project is a Memo API built with Spring Boot.  
+It implements core backend features including authentication, authorization, and exception handling using JWT.
+
+---
 
 ## Tech Stack
 - Java
@@ -9,55 +12,67 @@ This project is a Spring Boot based backend application that provides memo manag
 - Spring Data JPA
 - PostgreSQL (Render)
 - JWT (JSON Web Token)
+- BCrypt (Password Encryption)
+
+---
 
 ## Features
 
-### User Authentication
-- User signup
-- User login
-- JWT token generation
+### Authentication
+- User signup with password encryption (BCrypt)
+- User login with JWT token generation
+- JWT-based authentication filter
 
-### Memo API
-- Create memo
-- Read memo list
-- Pagination support
-- Search functionality
-- Sorting support
+### Security
+- Encrypted password storage
+- JWT token validation
+- Protected API endpoints
 
-## API Endpoints
+### Exception Handling
+- Global exception handler
+- Custom exception handling
+- Input validation using @Valid and @NotBlank
 
-### Auth
-- POST /auth/signup
-- POST /auth/login
+---
 
-### Memo
-- GET /memo
-- POST /memo
+## API Examples
 
-## Authentication Flow
-1. User logs in with username and password
-2. Server validates credentials
-3. JWT token is generated and returned
-4. Client stores token for future requests
+### Signup
+POST /auth/signup
 
-## Project Structure
-- controller: API endpoints
-- service: business logic
-- repository: database access
-- entity: database models
-- dto: request/response objects
-- jwt: token generation logic
+Request:
+{
+"username": "test",
+"password": "1234"
+}
 
-## Database
-- PostgreSQL hosted on Render
+---
 
-## Deployment
-- Backend deployed on Render
-- Database connected via environment variables
+### Login
+POST /auth/login
 
-## Future Improvements
-- JWT authentication filter
-- Password encryption (BCrypt)
-- Exception handling improvement
-- API validation
-- Refresh token implementation
+Request:
+{
+"username": "test",
+"password": "1234"
+}
+
+---
+
+### Authenticated Request
+Authorization: Bearer {JWT_TOKEN}
+
+---
+
+## What I Learned
+- How JWT authentication works in backend systems
+- How to securely store passwords using BCrypt
+- How to design a global exception handling structure
+- How to validate request data using Spring Validation
+
+---
+
+## Next Steps
+- Implement memo CRUD features
+- Associate memos with authenticated users
+- Improve API structure and refactor code

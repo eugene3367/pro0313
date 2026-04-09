@@ -24,10 +24,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleAll(Exception e) {
+    public ResponseEntity<ApiResponse<Object>> handleAll(Exception e) {
         return ResponseEntity
                 .status(500)
-                .body("Internal Server Error");
+                .body(new ApiResponse<>(false, null,
+                        new ErrorResponse("Internal Server Error", 500)));
     }
 
     @ExceptionHandler(MemoNotFoundException.class)
@@ -36,5 +37,13 @@ public class GlobalExceptionHandler {
                 .status(404)
                 .body(new ApiResponse<>(false, null,
                         new ErrorResponse(e.getMessage(), 404)));
+    }
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ApiResponse<Object>> handleCustomException(CustomException e) {
+        return ResponseEntity
+                .status(400)
+                .body(new ApiResponse<>(false, null,
+                        new ErrorResponse(e.getMessage(), 400)));
     }
 }
