@@ -2,8 +2,12 @@ package com.example.pro0313.service;
 
 import com.example.pro0313.dto.MemoResponseDto;
 import com.example.pro0313.entity.Memo;
+import com.example.pro0313.entity.User;
+import com.example.pro0313.exception.CustomException;
 import com.example.pro0313.exception.MemoNotFoundException;
 import com.example.pro0313.repository.MemoRepository;
+import com.example.pro0313.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,27 +16,48 @@ import com.example.pro0313.dto.MemoDto;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+
 public class MemoService {
     private final MemoRepository memoRepository;
 
-    public MemoService(MemoRepository memoRepository) {
-        this.memoRepository = memoRepository;
-    }
+    private final UserRepository userRepository;
 
-    public MemoDto createMemo(MemoDto dto) {
+
+//    public MemoDto createMemo(MemoDto dto) {
+//        Memo memo = new Memo();
+//        memo.setContent(dto.getContent());
+//
+//        Memo saved = memoRepository.save(memo);
+//
+//        return toDto(saved);
+//    }
+
+    public void createMemo(String content, String username) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new CustomException("사용자 없음"));
+
         Memo memo = new Memo();
-        memo.setContent(dto.getContent());
+        memo.setContent(content);
+        memo.setUser(user); // 🔥 연결
 
-        Memo saved = memoRepository.save(memo);
-
-        return toDto(saved);
+        memoRepository.save(memo);
     }
 
-    public List<MemoDto> getMemos() {
-        return memoRepository.findAll()
-                .stream()
-                .map(this::toDto)
-                .toList();
+//    public List<MemoDto> getMemos() {
+//        return memoRepository.findAll()
+//                .stream()
+//                .map(this::toDto)
+//                .toList();
+//    }
+
+    public List<Memo> getMyMemos(String username) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new CustomException("사용자 없음"));
+
+        return memoRepository.findByUser(user);
     }
 
     public MemoDto updateMemo(Long id, MemoDto dto) {
@@ -79,4 +104,6 @@ public class MemoService {
         return memoRepository.findAll(pageable)
                 .map(MemoResponseDto::new);
     }
+
+
 }

@@ -33,6 +33,10 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
+        String username = JwtUtil.getUsername(token);
+
+        request.setAttribute("username", username);
+
         // 통과
         filterChain.doFilter(request, response);
     }

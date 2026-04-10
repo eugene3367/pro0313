@@ -1,78 +1,57 @@
-# Memo API (Spring Boot)
+# Memo API Project
 
-## Project Overview
-This project is a Memo API built with Spring Boot.  
-It implements core backend features including authentication, authorization, and exception handling using JWT.
-
----
+## Overview
+This project is a backend API for a memo application built with Spring Boot.  
+It supports user authentication using JWT and allows users to create and manage their own memos.
 
 ## Tech Stack
 - Java
 - Spring Boot
-- Spring Data JPA
-- PostgreSQL (Render)
-- JWT (JSON Web Token)
-- BCrypt (Password Encryption)
-
----
+- Spring Security
+- JWT
+- JPA (Hibernate)
+- PostgreSQL
 
 ## Features
 
 ### Authentication
-- User signup with password encryption (BCrypt)
-- User login with JWT token generation
-- JWT-based authentication filter
+- User signup
+- User login with JWT token
 
-### Security
-- Encrypted password storage
-- JWT token validation
-- Protected API endpoints
+### Memo
+- Create memo
+- Get my memos (only authenticated user)
+- Update memo
+- Delete memo
 
-### Exception Handling
-- Global exception handler
-- Custom exception handling
-- Input validation using @Valid and @NotBlank
+## API Endpoints
 
----
+### Auth
+- POST /auth/signup
+- POST /auth/login
+- GET /auth/users
 
-## API Examples
+### Memo
+- POST /memo
+- GET /memo
+- PUT /memo/{id}
+- DELETE /memo/{id}
 
-### Signup
-POST /auth/signup
+## How It Works
 
-Request:
-{
-"username": "test",
-"password": "1234"
-}
+1. User signs up
+2. User logs in and receives JWT token
+3. Client sends requests with Authorization header
+4. Server extracts username from token
+5. Memo is saved and retrieved based on the authenticated user
 
----
+## Database
 
-### Login
-POST /auth/login
+- User and Memo have a relationship (ManyToOne)
+- Each memo belongs to a specific user
 
-Request:
-{
-"username": "test",
-"password": "1234"
-}
+## Notes
 
----
-
-### Authenticated Request
-Authorization: Bearer {JWT_TOKEN}
-
----
-
-## What I Learned
-- How JWT authentication works in backend systems
-- How to securely store passwords using BCrypt
-- How to design a global exception handling structure
-- How to validate request data using Spring Validation
-
----
-
-## Next Steps
-- Implement memo CRUD features
-- Associate memos with authenticated users
-- Improve API structure and refactor code
+- All memo APIs require authentication
+- JWT is used for stateless authentication
+- PostgreSQL is used as the main database

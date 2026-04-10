@@ -1,7 +1,9 @@
 package com.example.pro0313.entity;
 
 import jakarta.persistence.*;
+import lombok.Setter;
 
+@Setter
 @Entity
 public class Memo {
 
@@ -9,10 +11,14 @@ public class Memo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
     private String content;
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Long getId() {
         return id;
@@ -25,4 +31,5 @@ public class Memo {
     public void setContent(String content) {
         this.content = content;
     }
+
 }

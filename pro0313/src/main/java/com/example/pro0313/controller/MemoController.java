@@ -1,12 +1,17 @@
 package com.example.pro0313.controller;
 
 import com.example.pro0313.dto.MemoDto;
+import com.example.pro0313.dto.MemoRequestDto;
+import com.example.pro0313.entity.Memo;
 import com.example.pro0313.response.ApiResponse;
 import com.example.pro0313.service.MemoService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/memo")
@@ -18,14 +23,26 @@ public class MemoController {
         this.memoService = memoService;
     }
 
+//    @PostMapping
+//    public ResponseEntity<ApiResponse<MemoDto>> createMemo(@Valid @RequestBody MemoDto dto) {
+//
+//        MemoDto result = memoService.createMemo(dto);
+//
+//        return ResponseEntity.ok(
+//                new ApiResponse<>(true, result, null)
+//        );
+//    }
+
     @PostMapping
-    public ResponseEntity<ApiResponse<MemoDto>> createMemo(@Valid @RequestBody MemoDto dto) {
+    public ApiResponse<String> createMemo(
+            @RequestBody MemoRequestDto dto,
+            HttpServletRequest request) {
 
-        MemoDto result = memoService.createMemo(dto);
+        String username = (String) request.getAttribute("username");
 
-        return ResponseEntity.ok(
-                new ApiResponse<>(true, result, null)
-        );
+        memoService.createMemo(dto.getContent(), username);
+
+        return ApiResponse.success("메모 생성 성공");
     }
 
 
@@ -53,15 +70,29 @@ public class MemoController {
         );
     }
 
-    @GetMapping
-    public ApiResponse<?> getMemos(
-            @RequestParam(required = false) String keyword,
-            Pageable pageable
-    ) {
-        if (keyword != null) {
-            return ApiResponse.success(memoService.search(keyword));
-        }
+//    @GetMapping
+//    public ApiResponse<?> getMemos(
+//            @RequestParam(required = false) String keyword,
+//            Pageable pageable
+//    ) {
+//        if (keyword != null) {
+//            return ApiResponse.success(memoService.search(keyword));
+//        }
+//
+//        return ApiResponse.success(memoService.findAll(pageable));
+//    }
 
-        return ApiResponse.success(memoService.findAll(pageable));
+    @GetMapping
+    public ApiResponse<List<Memo>> getMyMemos(HttpServletRequest request) {
+
+        String username = (String) request.getAttribute("username");
+
+        return ApiResponse.success(memoService.getMyMemos(username));
+    }
+
+    @GetMapping("/me")
+    public String getCurrentUser(HttpServletRequest request) {
+        String username = (String) request.getAttribute("username");
+        return "현재 사용자: " + username;
     }
 }
