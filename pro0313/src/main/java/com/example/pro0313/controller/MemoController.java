@@ -2,6 +2,7 @@ package com.example.pro0313.controller;
 
 import com.example.pro0313.dto.MemoDto;
 import com.example.pro0313.dto.MemoRequestDto;
+import com.example.pro0313.dto.MemoResponseDto;
 import com.example.pro0313.entity.Memo;
 import com.example.pro0313.response.ApiResponse;
 import com.example.pro0313.service.MemoService;
@@ -46,28 +47,48 @@ public class MemoController {
     }
 
 
+//    @PutMapping("/{id}")
+//    public ResponseEntity<ApiResponse<MemoDto>> updateMemo(
+//            @PathVariable Long id,
+//            @Valid @RequestBody MemoDto dto
+//    ) {
+//
+//        MemoDto result = memoService.updateMemo(id, dto);
+//
+//        return ResponseEntity.ok(
+//                new ApiResponse<>(true, result, null)
+//        );
+//    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<MemoDto>> updateMemo(
+    public ApiResponse<MemoDto> updateMemo(
             @PathVariable Long id,
             @Valid @RequestBody MemoDto dto
     ) {
 
         MemoDto result = memoService.updateMemo(id, dto);
 
-        return ResponseEntity.ok(
-                new ApiResponse<>(true, result, null)
-        );
+        return ApiResponse.success(result);
     }
+
+//    // Delete
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<ApiResponse<Void>> deleteMemo(@PathVariable Long id) {
+//
+//        memoService.deleteMemo(id);
+//
+//        return ResponseEntity.ok(
+//                new ApiResponse<>(true, null, null)
+//        );
+//    }
 
     // Delete
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteMemo(@PathVariable Long id) {
+    public ApiResponse<Void> deleteMemo(@PathVariable Long id) {
 
         memoService.deleteMemo(id);
 
-        return ResponseEntity.ok(
-                new ApiResponse<>(true, null, null)
-        );
+        return ApiResponse.success(null);
     }
 
 //    @GetMapping
@@ -82,8 +103,16 @@ public class MemoController {
 //        return ApiResponse.success(memoService.findAll(pageable));
 //    }
 
+//    @GetMapping
+//    public ApiResponse<List<Memo>> getMyMemos(HttpServletRequest request) {
+//
+//        String username = (String) request.getAttribute("username");
+//
+//        return ApiResponse.success(memoService.getMyMemos(username));
+//    }
+
     @GetMapping
-    public ApiResponse<List<Memo>> getMyMemos(HttpServletRequest request) {
+    public ApiResponse<List<MemoResponseDto>> getMyMemos(HttpServletRequest request) {
 
         String username = (String) request.getAttribute("username");
 

@@ -23,7 +23,7 @@ public class AuthController {
 
     // 회원가입
     @PostMapping("/signup")
-    public ApiResponse<String> signup(@RequestBody SignupRequestDto dto) {
+    public ApiResponse<String> signup(@Valid @RequestBody SignupRequestDto dto) {
         userService.signup(dto);
         return ApiResponse.success("회원가입 성공");
     }

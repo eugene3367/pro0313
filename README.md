@@ -1,57 +1,89 @@
 # Memo API Project
 
 ## Overview
-This project is a backend API for a memo application built with Spring Boot.  
-It supports user authentication using JWT and allows users to create and manage their own memos.
 
-## Tech Stack
-- Java
-- Spring Boot
-- Spring Security
-- JWT
-- JPA (Hibernate)
-- PostgreSQL
+This project is a RESTful API built with Spring Boot that provides user authentication and memo management features. It includes JWT-based authentication, structured API responses, and proper exception handling.
 
 ## Features
 
-### Authentication
-- User signup
-- User login with JWT token
+* User signup and login with JWT authentication
+* Create, read, update, and delete memos
+* Retrieve memos for the authenticated user
+* Global exception handling with consistent response structure
+* DTO pattern applied to separate API responses from entity models
 
-### Memo
-- Create memo
-- Get my memos (only authenticated user)
-- Update memo
-- Delete memo
+## Tech Stack
 
-## API Endpoints
+* Java
+* Spring Boot
+* Spring Data JPA
+* PostgreSQL
+* JWT (JSON Web Token)
+
+## API Structure
+
+All API responses follow a unified format:
+
+Success Response:
+{
+"success": true,
+"data": {},
+"error": null
+}
+
+Failure Response:
+{
+"success": false,
+"data": null,
+"error": {
+"message": "Error message",
+"status": 400
+}
+}
+
+## Authentication
+
+JWT is used for authentication.
+
+After login, include the token in the Authorization header:
+
+Authorization: Bearer {token}
+
+## Main Endpoints
 
 ### Auth
-- POST /auth/signup
-- POST /auth/login
-- GET /auth/users
+
+* POST /auth/signup
+* POST /auth/login
+* GET /auth/users
 
 ### Memo
-- POST /memo
-- GET /memo
-- PUT /memo/{id}
-- DELETE /memo/{id}
 
-## How It Works
+* POST /memo
+* GET /memo
+* PUT /memo/{id}
+* DELETE /memo/{id}
 
-1. User signs up
-2. User logs in and receives JWT token
-3. Client sends requests with Authorization header
-4. Server extracts username from token
-5. Memo is saved and retrieved based on the authenticated user
+## Project Structure
 
-## Database
+* controller: Handles HTTP requests
+* service: Contains business logic
+* repository: Handles database access
+* entity: JPA entities
+* dto: Data transfer objects
+* exception: Custom exceptions and global handler
+* jwt: JWT authentication logic
+* response: API response wrapper
 
-- User and Memo have a relationship (ManyToOne)
-- Each memo belongs to a specific user
+## Improvements
 
-## Notes
+* Applied DTO pattern to prevent entity exposure
+* Unified API response structure
+* Implemented global exception handling
 
-- All memo APIs require authentication
-- JWT is used for stateless authentication
-- PostgreSQL is used as the main database
+## Future Work
+
+* Add pagination for memo retrieval
+* Add validation for all request DTOs
+* Implement refresh token logic
+* Add frontend UI integration

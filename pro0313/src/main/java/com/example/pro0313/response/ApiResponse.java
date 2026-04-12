@@ -14,12 +14,13 @@ public class ApiResponse<T> {
         this.error = error;
     }
 
+    public ApiResponse() {}
+
     public boolean isSuccess() { return success; }
     public T getData() { return data; }
     public ErrorResponse getError() { return error; }
 
-    public ApiResponse() {
-    }
+    // 성공
     public static <T> ApiResponse<T> success(T data) {
         ApiResponse<T> response = new ApiResponse<>();
         response.success = true;
@@ -27,4 +28,11 @@ public class ApiResponse<T> {
         return response;
     }
 
+    // fail
+    public static <T> ApiResponse<T> fail(String message, int status) {
+        ApiResponse<T> response = new ApiResponse<>();
+        response.success = false;
+        response.error = new ErrorResponse(message, status);
+        return response;
+    }
 }

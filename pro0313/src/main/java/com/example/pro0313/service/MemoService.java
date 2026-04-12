@@ -35,6 +35,11 @@ public class MemoService {
 
     public void createMemo(String content, String username) {
 
+        // 강제 500 test
+//        if(true) {
+//            throw new RuntimeException("강제 에러 테스트");
+//        }
+
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException("사용자 없음"));
 
@@ -52,13 +57,15 @@ public class MemoService {
 //                .toList();
 //    }
 
-    public List<Memo> getMyMemos(String username) {
+    public List<MemoResponseDto> getMyMemos(String username) {
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException("사용자 없음"));
 
-        return memoRepository.findByUser(user);
-    }
+        return memoRepository.findByUser(user)
+                .stream()
+                .map(MemoResponseDto::new)
+                .toList();    }
 
     public MemoDto updateMemo(Long id, MemoDto dto) {
         Memo memo = memoRepository.findById(id)

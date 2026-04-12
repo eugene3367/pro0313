@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class MemoResponseDto {
+
     private Long id;
     private String content;
 
@@ -13,5 +14,7 @@ public class MemoResponseDto {
         this.content = memo.getContent();
     }
 
+    public Long getId() { return id; }
+    public String getContent() { return content; }
 
 }
