@@ -8,6 +8,7 @@ import com.example.pro0313.response.ApiResponse;
 import com.example.pro0313.service.MemoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -111,12 +112,31 @@ public class MemoController {
 //        return ApiResponse.success(memoService.getMyMemos(username));
 //    }
 
+//    @GetMapping
+//    public ApiResponse<Page<MemoResponseDto>> getMyMemos(HttpServletRequest request, Pageable pageable) {
+//
+//        String username = (String) request.getAttribute("username");
+//
+//        return ApiResponse.success(memoService.getMyMemos(username, pageable));
+//    }
+
     @GetMapping
-    public ApiResponse<List<MemoResponseDto>> getMyMemos(HttpServletRequest request) {
+    public ApiResponse<Page<MemoResponseDto>> getMemos(
+            @RequestParam(required = false) String keyword,
+            HttpServletRequest request,
+            Pageable pageable) {
 
         String username = (String) request.getAttribute("username");
 
-        return ApiResponse.success(memoService.getMyMemos(username));
+        if (keyword != null && !keyword.isEmpty()) {
+            return ApiResponse.success(
+                    memoService.searchMemos(username, keyword, pageable)
+            );
+        }
+
+        return ApiResponse.success(
+                memoService.getMyMemos(username, pageable)
+        );
     }
 
     @GetMapping("/me")

@@ -57,15 +57,13 @@ public class MemoService {
 //                .toList();
 //    }
 
-    public List<MemoResponseDto> getMyMemos(String username) {
+    public Page<MemoResponseDto> getMyMemos(String username, Pageable pageable) {
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new CustomException("사용자 없음"));
 
-        return memoRepository.findByUser(user)
-                .stream()
-                .map(MemoResponseDto::new)
-                .toList();    }
+        return memoRepository.findByUser(user, pageable)
+                .map(MemoResponseDto::new);    }
 
     public MemoDto updateMemo(Long id, MemoDto dto) {
         Memo memo = memoRepository.findById(id)
@@ -93,11 +91,21 @@ public class MemoService {
         return dto;
     }
 
-    public List<MemoResponseDto> search(String keyword) {
-        return memoRepository.findByContentContaining(keyword)
-                .stream()
-                .map(MemoResponseDto::new)
-                .toList();
+//    public List<MemoResponseDto> search(String keyword) {
+//        return memoRepository.findByContentContaining(keyword)
+//                .stream()
+//                .map(MemoResponseDto::new)
+//                .toList();
+//    }
+
+    public Page<MemoResponseDto> searchMemos(String username, String keyword, Pageable pageable) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new CustomException("사용자 없음"));
+
+        return memoRepository
+                .findByUserAndContentContaining(user, keyword, pageable)
+                .map(MemoResponseDto::new);
     }
 
     public List<MemoResponseDto> findAll() {

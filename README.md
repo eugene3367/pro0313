@@ -1,89 +1,96 @@
 # Memo API Project
 
 ## Overview
+This project is a backend REST API built with Spring Boot.  
+It provides user authentication and memo management functionality.
 
-This project is a RESTful API built with Spring Boot that provides user authentication and memo management features. It includes JWT-based authentication, structured API responses, and proper exception handling.
+---
 
 ## Features
 
-* User signup and login with JWT authentication
-* Create, read, update, and delete memos
-* Retrieve memos for the authenticated user
-* Global exception handling with consistent response structure
-* DTO pattern applied to separate API responses from entity models
+### Authentication
+- User signup
+- User login with JWT authentication
+
+### Memo Management
+- Create memo
+- Update memo
+- Delete memo
+- Get user's memos
+
+### Advanced Features
+- Pagination support
+- Sorting support
+- Keyword-based search
+- Unified API response structure
+- Global exception handling
+
+---
 
 ## Tech Stack
 
-* Java
-* Spring Boot
-* Spring Data JPA
-* PostgreSQL
-* JWT (JSON Web Token)
+- Java
+- Spring Boot
+- Spring Data JPA
+- PostgreSQL
+- JWT Authentication
 
-## API Structure
+---
 
-All API responses follow a unified format:
-
-Success Response:
-{
-"success": true,
-"data": {},
-"error": null
-}
-
-Failure Response:
-{
-"success": false,
-"data": null,
-"error": {
-"message": "Error message",
-"status": 400
-}
-}
-
-## Authentication
-
-JWT is used for authentication.
-
-After login, include the token in the Authorization header:
-
-Authorization: Bearer {token}
-
-## Main Endpoints
+## API Endpoints
 
 ### Auth
 
-* POST /auth/signup
-* POST /auth/login
-* GET /auth/users
+POST /auth/signup  
+POST /auth/login
+
+---
 
 ### Memo
 
-* POST /memo
-* GET /memo
-* PUT /memo/{id}
-* DELETE /memo/{id}
+POST /memo  
+GET /memo  
+PUT /memo/{id}  
+DELETE /memo/{id}
 
-## Project Structure
+---
 
-* controller: Handles HTTP requests
-* service: Contains business logic
-* repository: Handles database access
-* entity: JPA entities
-* dto: Data transfer objects
-* exception: Custom exceptions and global handler
-* jwt: JWT authentication logic
-* response: API response wrapper
+## Query Parameters (GET /memo)
 
-## Improvements
+- page: page number (default: 0)
+- size: number of items per page
+- sort: sorting field and direction (e.g., id,desc)
+- keyword: search keyword (optional)
 
-* Applied DTO pattern to prevent entity exposure
-* Unified API response structure
-* Implemented global exception handling
+Example:
 
-## Future Work
+GET /memo?page=0&size=5&sort=id,desc  
+GET /memo?keyword=hello&page=0&size=5
 
-* Add pagination for memo retrieval
-* Add validation for all request DTOs
-* Implement refresh token logic
-* Add frontend UI integration
+---
+
+## Response Format
+
+```json
+{
+  "success": true,
+  "data": {},
+  "error": null
+}
+```
+
+### Project Structure
+
+Controller → Service → Repository → Entity
+DTO is used for request and response mapping.
+
+---
+
+## Future Improvements
+
+* AWS deployment
+* Docker integration
+* Refresh token implementation
+* Frontend integration
+
+
