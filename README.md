@@ -91,6 +91,6 @@ DTO is used for request and response mapping.
 * AWS deployment
 * Docker integration
 * Refresh token implementation
-* Frontend integration
+* Frontend integration 
 
 
