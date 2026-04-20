@@ -20,6 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build
+        working-directory: pro0313
         run: ./gradlew build -x test
 
       - name: Deploy to EC2
@@ -29,7 +30,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd pro0313/pro0313
+            cd pro0313
             git pull
             ./gradlew build -x test
             pkill -f java || true
