@@ -92,13 +92,6 @@ public class MemoController {
         return ApiResponse.success(null);
     }
 
-//    @GetMapping
-//    public ApiResponse<List<Memo>> getMyMemos(HttpServletRequest request) {
-//
-//        String username = (String) request.getAttribute("username");
-//
-//        return ApiResponse.success(memoService.getMyMemos(username));
-//    }
 
 //    @GetMapping
 //    public ApiResponse<Page<MemoResponseDto>> getMyMemos(HttpServletRequest request, Pageable pageable) {

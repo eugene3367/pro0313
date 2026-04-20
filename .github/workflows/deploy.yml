@@ -31,6 +31,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd pro0313
+            git reset --hard origin/main
             git pull
             ./gradlew build -x test
             pkill -f java || true
