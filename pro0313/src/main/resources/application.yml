@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://dpg-d77l14chg0os73ccsl0g-a.oregon-postgres.render.com:5432/memo_db_cyn8
+    username: memo_db_cyn8_user
+    password: DSPFrrmX5lyYuQfMRgs2LHtHNmF57Mm2
 
   jpa:
     hibernate:
