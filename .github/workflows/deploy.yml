@@ -30,7 +30,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            cd pro0313
+            cd pro0313/pro0313
             git reset --hard origin/main
             git pull
             ./gradlew build -x test
