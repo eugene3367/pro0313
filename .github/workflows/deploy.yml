@@ -13,6 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Set JAVA_HOME
+        run: echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk" >> $GITHUB_ENV
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -36,3 +39,4 @@ jobs:
             ./gradlew build -x test
             pkill -f java || true
             setsid java -jar build/libs/*SNAPSHOT.jar > app.log 2>&1 &
+            
