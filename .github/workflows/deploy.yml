@@ -31,8 +31,8 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd pro0313/pro0313
+            git fetch origin main
             git reset --hard origin/main
-            git pull
             ./gradlew build -x test
             pkill -f java || true
             nohup java -jar build/libs/*SNAPSHOT.jar > app.log 2>&1 &
