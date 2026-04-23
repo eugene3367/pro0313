@@ -72,16 +72,7 @@ public class MemoController {
         return ApiResponse.success(result);
     }
 
-//    // Delete
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<ApiResponse<Void>> deleteMemo(@PathVariable Long id) {
-//
-//        memoService.deleteMemo(id);
-//
-//        return ResponseEntity.ok(
-//                new ApiResponse<>(true, null, null)
-//        );
-//    }
+
 
     // Delete
     @DeleteMapping("/{id}")
