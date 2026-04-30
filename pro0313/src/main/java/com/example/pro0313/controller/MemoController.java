@@ -11,6 +11,8 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,9 +40,9 @@ public class MemoController {
     @PostMapping
     public ApiResponse<String> createMemo(
             @RequestBody MemoRequestDto dto,
-            HttpServletRequest request) {
+            Authentication authentication) {
 
-        String username = (String) request.getAttribute("username");
+        String username = authentication.getName();
 
         memoService.createMemo(dto.getContent(), username);
 
@@ -87,10 +89,10 @@ public class MemoController {
     @GetMapping
     public ApiResponse<Page<MemoResponseDto>> getMemos(
             @RequestParam(required = false) String keyword,
-            HttpServletRequest request,
+            Authentication authentication,
             Pageable pageable) {
 
-        String username = (String) request.getAttribute("username");
+        String username = authentication.getName();
 
         if (keyword != null && !keyword.isEmpty()) {
             return ApiResponse.success(
@@ -103,9 +105,22 @@ public class MemoController {
         );
     }
 
+//    @GetMapping("/me")
+//    public String getCurrentUser(HttpServletRequest request) {
+//        String username = (String) request.getAttribute("username");
+//        return "현재 사용자: " + username;
+//    }
+
     @GetMapping("/me")
-    public String getCurrentUser(HttpServletRequest request) {
-        String username = (String) request.getAttribute("username");
-        return "현재 사용자: " + username;
+    public ApiResponse<String> me() {
+
+        System.out.println("👉 컨트롤러 진입");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        System.out.println("👉 authentication: " + authentication);
+
+        return ApiResponse.success(authentication.getName());
+
     }
 }
